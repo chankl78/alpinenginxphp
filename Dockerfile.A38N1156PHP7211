@@ -1,23 +1,24 @@
-FROM php:7.2.12-fpm-alpine3.8
+FROM php:7.2.11-fpm-alpine3.8
 
 LABEL MAINTAINER Chan Kuan Leang <chankl78@gmail.com>
 
 RUN apk --update add wget \
-  	curl \
-  	git \
-  	nano \
-	yarn \
+  curl \
+  yarn \
+  git \
+  nano \
+  nodejs \
   # grep \
   # build-base \
   # libmemcached-dev \
-   	libmcrypt-dev \
-  	libxml2-dev \
-  	libpng-dev \
-  # libltdl \
-  	zlib-dev \
+  libmcrypt-dev \
+  libxml2-dev \
+  libpng-dev \
+  libltdl \
+  zlib-dev \
   # autoconf \
   # cyrus-sasl-dev \
-  # libgsasl-dev \
+  #libgsasl-dev \
   supervisor
 
 ENV NGINX_VERSION 1.15.6
@@ -155,6 +156,14 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& ln -sf /dev/stderr /var/log/nginx/error.log
 
 RUN docker-php-ext-install mysqli mbstring pdo pdo_mysql tokenizer xml
+# RUN pecl channel-update pecl.php.net && pecl install memcached && docker-php-ext-enable memcached
+
+#RUN apk add --no-cache \
+#        			libmcrypt-dev \
+#        			libltdl \
+#        #&& docker-php-ext-configure mcrypt \
+#        && docker-php-ext-install mcrypt 
+
 
 ENV COMPOSER_VERSION 1.7.2
 
@@ -166,6 +175,7 @@ RUN	apk add --update curl openssl && \
 
 RUN rm /var/cache/apk/* && \
     mkdir -p /var/www
+
 
 WORKDIR /var/www/html
 

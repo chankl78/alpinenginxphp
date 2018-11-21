@@ -1,6 +1,6 @@
 ## Installation of the Docker Container in computer
 
-#Step 1 - Build container
+#Step 1 - Build container with the dockerfile
   - You can change "alpine3.8" to any name you want
   - `docker build -t alpine3.8 .`
 
@@ -12,9 +12,26 @@
   - `docker exec -it alpine3.8 sh`
   - `cd /var/www/html`
 
-#Step 4 - Install Laravel 5.7
+#Step 4 - Run the following code in the container
+  - to install bash and libpng-dev for successful installation of yarn
+  - `docker exec -it alpine3.8 sh`
+  - `apk --no-cache add make bash g++ zlib-dev libpng-dev`
+  - `exit`
+
+#Step 5 - Install Laravel 5.7
   - To be install if you are creating a new project
   - `docker exec -it alpine3.8 /var/init_laravel.sh`
 
-#Step 5 - Browser to check if it is working correctly
+#Step 6 - Browser to check if it is working correctly
   - `http://localhost:8080`
+
+## TO PROCEED IF ONLY YOU WANT TO USED Clear Admin Template
+#Step 7 - Copy the clear admin template files inside the laravel folder
+  - Copy the correct files from clear 4.3
+  - So that all the necessary npm will be downloaded correctly
+
+#Step 8 - Install Yarn, follow by npm
+  - `docker exec -it alpine3.8 sh`
+  - `yarn install`
+  - `npm run production`
+  - Please note that when using `npm run dev`, the .map errors appears. So use .production to solve the error.
