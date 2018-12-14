@@ -1,4 +1,4 @@
-FROM php:7.3.0-fpm-alpine3.8
+FROM php:7.2.12-fpm-alpine3.8
 
 LABEL MAINTAINER Chan Kuan Leang <chankl78@gmail.com>
 
@@ -7,8 +7,6 @@ RUN apk --update add wget \
   	git \
   	nano \
 	yarn \
-	nodejs \
-	nodejs-npm \
   # grep \
   # build-base \
   # libmemcached-dev \
@@ -22,7 +20,7 @@ RUN apk --update add wget \
   # libgsasl-dev \
   supervisor
 
-ENV NGINX_VERSION 1.15.7
+ENV NGINX_VERSION 1.15.6
 
 RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& CONFIG="\
@@ -158,7 +156,7 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 
 RUN docker-php-ext-install mysqli mbstring pdo pdo_mysql tokenizer xml
 
-ENV COMPOSER_VERSION 1.8.0
+ENV COMPOSER_VERSION 1.7.2
 
 # Let's roll composer
 RUN	apk add --update curl openssl && \
