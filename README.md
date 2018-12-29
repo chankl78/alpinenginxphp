@@ -27,7 +27,7 @@
 
 ## TO PROCEED IF ONLY YOU WANT TO USED Clear Admin Template
 #Step 7 - Copy the clear admin template files inside the laravel folder
-  - Copy the correct files from clear 4.3
+  - Copy the correct files from clear 4.4
   - So that all the necessary npm will be downloaded correctly
 
 #Step 8 - Install Yarn, follow by npm
