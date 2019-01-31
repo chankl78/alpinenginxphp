@@ -17,15 +17,17 @@
   - `docker exec -it alpine3.8 sh`
   - `apk --no-cache add make bash g++ zlib-dev libpng-dev`
   - `exit`
+  - Follow Step 5 point 3 for file installation
 
 #Step 5 - Install Laravel 5.7
   - To be install if you are creating a new project
   - `docker exec -it alpine3.8 /var/init_laravel.sh`
+  - `docker exec -it alpine3.8 /var/init_laravecleartemplatel.sh` with clear admin template
 
 #Step 6 - Browser to check if it is working correctly
   - `http://localhost:8080`
 
-## TO PROCEED IF ONLY YOU WANT TO USED Clear Admin Template
+## TO PROCEED IF ONLY YOU WANT TO USE Clear Admin Template
 #Step 7 - Copy the clear admin template files inside the laravel folder
   - Copy the correct files from clear 4.4
   - So that all the necessary npm will be downloaded correctly
