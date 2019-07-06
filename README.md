@@ -3,6 +3,9 @@
 #Step 1 - Build container with the dockerfile
   - You can change "alpine3.8" to any name you want
   - `docker build -t alpine3.8 .`
+  - To push images and save in docker hub
+    - `docker tag alpine39nginx1171php736 username/alpine39nginx1171php736`
+    - `docker push username/alpine39nginx1171php736`
 
 #Step 2 - Run container (To use for multiple container)
   - `docker run -d --name alpine3.8 -p 8080:80 -v $(pwd)/html:/var/www/html alpine3.8:latest`
@@ -22,7 +25,8 @@
 #Step 5 - Install Laravel 5.7
   - To be install if you are creating a new project
   - `docker exec -it alpine3.8 /var/init_laravel.sh`
-  - `docker exec -it alpine3.8 /var/init_laravecleartemplatel.sh` with clear admin template
+  - `docker exec -it alpine3.8 /var/init_laravellumen.sh` with Laravel Lumen
+  - `docker exec -it alpine3.8 /var/init_laravelcleartemplatel.sh` with clear admin template
 
 #Step 6 - Browser to check if it is working correctly
   - `http://localhost:8080`
