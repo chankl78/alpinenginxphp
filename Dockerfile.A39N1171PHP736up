@@ -11,23 +11,25 @@ RUN apk update \
 	&& rm /var/cache/apk/*
 
 RUN apk --update add wget \
-  	curl \
-  	git \
-  	nano \
+	curl \
+	git \
+	nano \
 	nodejs-npm \
 	yarn \
-  # grep \
-  # build-base \
-  # libmemcached-dev \
-   	libmcrypt-dev \
-  	libxml2-dev \
-  	libpng-dev \
-  # libltdl \
-  	zlib-dev \
-  # autoconf \
-  # cyrus-sasl-dev \
-  # libgsasl-dev \
-  supervisor
+	# grep \
+	# build-base \
+	# libmemcached-dev \
+	libmcrypt-dev \
+	libxml2-dev \
+	libpng-dev \
+	# libltdl \
+	zlib-dev \
+	# autoconf \
+	# cyrus-sasl-dev \
+	# libgsasl-dev \
+	libzip-dev \
+	vim \
+	supervisor
 
 ENV NGINX_VERSION 1.17.1
 ENV NJS_VERSION   0.3.3
@@ -136,7 +138,8 @@ RUN set -x \
 	&& ln -sf /dev/stdout /var/log/nginx/access.log \
 	&& ln -sf /dev/stderr /var/log/nginx/error.log
 
-RUN docker-php-ext-install mysqli mbstring pdo pdo_mysql tokenizer xml
+RUN docker-php-ext-configure zip --with-libzip
+RUN docker-php-ext-install mysqli mbstring pdo pdo_mysql tokenizer xml zip
 
 ENV COMPOSER_VERSION 1.8.6
 
@@ -147,9 +150,7 @@ RUN	apk add --update curl openssl && \
 	apk del curl openssl 
 
 RUN rm /var/cache/apk/* && \
-    mkdir -p /var/www
-
-WORKDIR /var/www
+	mkdir -p /var/www
 
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY supervisord.conf /etc/supervisord.conf
@@ -158,13 +159,13 @@ COPY php.ini-production /usr/local/etc/php/php.ini-production
 COPY init_laravel.sh /var/init_laravel.sh
 COPY init_laravellumen.sh /var/init_laravellumen.sh
 COPY init_laravel_quasar.sh /var/init_laravel_quasar.sh
-COPY init_laravel_quasar_setup.sh /var/init_laravel_quasar_setup.sh
+COPY init_laravel_quasar.sh /var/init_laravel_quasar_installation.sh
 COPY init_laravel_cleartemplate.sh /var/init_laravel_cleartemplate.sh
-
 RUN chmod +x /var/init_laravel.sh
 RUN chmod +x /var/init_laravellumen.sh
 RUN chmod +x /var/init_laravel_quasar.sh
-RUN chmod +x /var/init_laravel_quasar_setup.sh
+RUN chmod +x /var/init_laravel_quasar_installation.sh
 RUN chmod +x /var/init_laravel_cleartemplate.sh
 
+WORKDIR /var/www
 ENTRYPOINT ["/usr/bin/supervisord", "-n", "-c",  "/etc/supervisord.conf"]
