@@ -4,12 +4,14 @@ cd /var/www/html
 
 composer create-project --prefer-dist laravel/laravel .
 
-rm package.json webpack.mix.js
+rm webpack.mix.js
 cp .env.example .env
 
 php artisan key:generate
 
 npm install
-npm install -g @vue/cli
-npm install -g framework7
-npm install -g framework7-vue
+npm install cordova
+npm install @vue/cli
+npm install framework7-cli --unsafe-perm=true --allow-root
+npm install framework7
+npm install framework7-vue
