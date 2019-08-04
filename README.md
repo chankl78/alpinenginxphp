@@ -1,10 +1,10 @@
-# Creating a Laravel 5.8 with Quasar 1.05 in Docker
+# Creating a Laravel 5.8 with Framework7 or quasar framework in Docker
 
-This is to create a development enviornment in docker container for my macbook pro, hosting laravel 5.8 with quasar 1.0.5 in alpine 3.9, nginx 1.17.1 and php 7.3.6
+This is to create a development enviornment in docker container for my macbook pro, hosting laravel 5.8 with quasar 1.0.5 or framework7 in alpine 3.10, nginx 1.17.2 and php 7.3.8
 
 Most likely I will always continue to upgrade alpine, nginx & php version.
 
-For laravel and quasar, most likely I will upgrade it thru the composer upgrade and npm for quasar.
+For laravel and quasar or framework7, most likely I will upgrade it thru the composer upgrade and npm for quasar.
 
 For older version of my old dockerfile, please read "README v1.md".  It is working enviornment of my old projects
 
@@ -17,15 +17,55 @@ For older version of my old dockerfile, please read "README v1.md".  It is worki
 
 2. Below is the steps for installing the dockerfile.  Any detail, refer the above link
    - You can change "alpine39nginx1171php736" to any name you want
-      - ```docker build --no-cache -t alpine39nginx1171php736:2.0.3 .```
+      - ```docker build --no-cache -t alpine310nginx1172php738:1.0.1 .```
    - To push images and save in docker hub (For my own referennce - lazy to search web)
-      - ```docker tag alpine39nginx1171php736:2.0.3 username/alpine39nginx1171php736:2.03```
-      - ```docker push username/alpine39nginx1171php736:2.0.3```
+      - ```docker tag alpine310nginx1172php738:1.0.1 username/alpine310nginx1172php738:1.0.1```
+      - ```docker push username/alpine310nginx1172php738:1.0.1```
+   - To start the docker container automatically
+      - ```docker update --restart=always [CONTAINER]```
 
-3. You can proceed to Installation either using the Manual way or Automated.
+3. You can proceed to Installation either using the Manual way or Automated.  Select using Framework7 or Quasar Framework
+
+## Installation (Manual) for Framework7
+1. Create a docker container (Refer to Prerequisites if you have not install dockerfile)
+   ```
+   docker run -d --name backofficev2 -p 8880:80 -v /usr/local/var/www/htdocs/backofficev2:/var/www/html chankl78/alpine310nginx1172php738
+   ```
+
+2. Install Laravel to the latest version
+   ```
+   cd /var/www/html/
+
+   composer create-project --prefer-dist laravel/laravel .
+   rm package.json webpack.mix.js
+   cp .env.example .env
+   php artisan key:generate
+   ```
+
+3. Install necessary tools
+   ```
+   cd /var/www/html/
+
+   npm install
+   npm install -g @vue/cli
+   npm install -g framework7
+   npm install -g framework7-vue
+   ```
 
 
-## Installation (Manual)
+## Installation (Auto) for Framework7
+1. Create a docker container (Refer to Prerequisites if you have not install dockerfile)
+   ```
+   docker run -d --name backofficev2 -p 8880:80 -v /usr/local/var/www/htdocs/backofficev2:/var/www/html alpine310nginx1172php738:1.0.1
+   ```
+
+2. Run docker exec to install the necessary tools
+   ```
+   docker exec -it backofficev2 /var/init_laravel_1stinstall_framework7.sh
+   ```
+
+
+## Installation (Manual) for Quasar Framework
 1. git clone the laravel5.8 and quasar 1.0 into the folder of your machine using the below link
    - https://gitlab.com/chankl78/laravel5.8-quasar1.0.git
 
@@ -72,7 +112,7 @@ For older version of my old dockerfile, please read "README v1.md".  It is worki
       - change it before you run `quasar dev`
 
 
-## Installation (Auto)
+## Installation (Auto) for Quasar Framework 
 1. Run docker exec to install the necessary tools
 ```docker exec -it backoffice /var/init_laravel_quasar_setup.sh```
 
@@ -106,3 +146,7 @@ The Laravel framework is open-sourced software licensed under the MIT license.
 ## Quasar License
 
 Copyright (c) 2015-present Razvan Stoenescu MIT License
+
+## Framework7 License
+The MIT License (MIT)
+Copyright (c) 2014 Vladimir Kharlampidi

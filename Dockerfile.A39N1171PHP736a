@@ -1,4 +1,4 @@
-FROM php:7.3.8-fpm-alpine3.10
+FROM php:7.3.6-fpm-alpine3.9
 
 LABEL MAINTAINER Chan Kuan Leang <chankl78@gmail.com>
 
@@ -29,7 +29,7 @@ RUN apk --update add wget \
   # libgsasl-dev \
   supervisor
 
-ENV NGINX_VERSION 1.17.2
+ENV NGINX_VERSION 1.17.1
 ENV NJS_VERSION   0.3.3
 ENV PKG_RELEASE   1
 
@@ -82,7 +82,6 @@ RUN set -x \
 	zlib-dev \
 	linux-headers \
 	libxslt-dev \
-	gd-dev \
 	geoip-dev \
 	perl-dev \
 	libedit-dev \
@@ -139,7 +138,7 @@ RUN set -x \
 
 RUN docker-php-ext-install mysqli mbstring pdo pdo_mysql tokenizer xml
 
-ENV COMPOSER_VERSION 1.9.0
+ENV COMPOSER_VERSION 1.8.6
 
 # Let's roll composer
 RUN	apk add --update curl openssl && \
@@ -160,14 +159,12 @@ COPY init_laravel.sh /var/init_laravel.sh
 COPY init_laravellumen.sh /var/init_laravellumen.sh
 COPY init_laravel_quasar.sh /var/init_laravel_quasar.sh
 COPY init_laravel_quasar_setup.sh /var/init_laravel_quasar_setup.sh
-COPY init_laravel_quasar.sh /var/init_laravel_1stinstall_framework7.sh
 COPY init_laravel_cleartemplate.sh /var/init_laravel_cleartemplate.sh
 
 RUN chmod +x /var/init_laravel.sh
 RUN chmod +x /var/init_laravellumen.sh
 RUN chmod +x /var/init_laravel_quasar.sh
 RUN chmod +x /var/init_laravel_quasar_setup.sh
-RUN chmod +x /var/init_laravel_1stinstall_framework7.sh
 RUN chmod +x /var/init_laravel_cleartemplate.sh
 
 ENTRYPOINT ["/usr/bin/supervisord", "-n", "-c",  "/etc/supervisord.conf"]
