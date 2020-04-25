@@ -1,6 +1,6 @@
 # Creating a Laravel 5.8 with Framework7 or quasar framework in Docker
 
-This is to create a development enviornment in docker container for my macbook pro, hosting laravel 5.8 with quasar 1.0.5 or framework7 in alpine 3.10, nginx 1.17.2 and php 7.3.8
+This is to create a development enviornment in docker container for my macbook pro, hosting laravel 7.* with quasar 1.* or framework7 in alpine 3.10, nginx 1.17.9 and php 7.4.4
 
 Most likely I will always continue to upgrade alpine, nginx & php version.
 
