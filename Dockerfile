@@ -130,7 +130,7 @@ RUN set -x \
     && apk add --no-cache curl ca-certificates \
 # forward request and error logs to docker log collector
     && ln -sf /dev/stdout /var/log/nginx/access.log \
-    && ln -sf /dev/stderr /var/log/nginx/error.log \
+    && ln -sf /dev/stderr /var/log/nginx/error.log
 
 ENV COMPOSER_VERSION 1.10.7
 
