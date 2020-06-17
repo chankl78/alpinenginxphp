@@ -17,10 +17,10 @@ For older version of my old dockerfile, please read "README v1.md".  It is worki
 
 2. Below is the steps for installing the dockerfile.  Any detail, refer the above link
    - You can change "alpine311nginx1190php747" to any name you want
-      - ```docker build --no-cache -t alpine311nginx1190php747:1.0.0 .```
+      - ```docker build --no-cache -t alpine311nginx1190php747:1.0.1 .```
    - To push images and save in docker hub (For my own referennce - lazy to search web)
-      - ```docker tag alpine311nginx1190php747:1.0.0 username/alpine311nginx1190php747:1.0.0```
-      - ```docker push username/alpine311nginx1190php747:1.0.0```
+      - ```docker tag alpine311nginx1190php747:1.0.1 username/alpine311nginx1190php747:1.0.1```
+      - ```docker push username/alpine311nginx1190php747:1.0.1```
    - To start the docker container automatically
       - ```docker update --restart=always [CONTAINER]```
 
@@ -80,7 +80,7 @@ For older version of my old dockerfile, please read "README v1.md".  It is worki
 
 2. Create a docker container (Refer to Prerequisites if you have not install dockerfile)
    ```
-   docker run -d --name backoffice -p 8880:80 -v /usr/local/var/www/htdocs/backoffice:/var/www/html alpine39nginx1171php736:latest
+   docker run -d --name backoffice -p 8880:80 -v /usr/local/var/www/htdocs/backoffice:/var/www/html alpine311nginx1190php747:1.0.1
    ```
 
 
@@ -94,10 +94,9 @@ For older version of my old dockerfile, please read "README v1.md".  It is worki
 
 4. Install necessary tools into quasar folder
    ```
-   cd /var/www/html/src-spa/
-   npm install
-   npm install -g @quasar/cli
-   npm install -g @vue/cli
+   yarn global add @quasar/cli
+   yarn global add @quasar/icongenie
+   yarn global add @vue/cli
 
    quasar c
    quasar b
@@ -116,7 +115,7 @@ For older version of my old dockerfile, please read "README v1.md".  It is worki
 
 ## Installation (Auto) for Quasar Framework 
 1. Run docker exec to install the necessary tools
-```docker exec -it backoffice /var/init_laravel_quasar_setup.sh```
+```docker exec -it backoffice /var/init_laravel_quasar.sh```
 
 2. Run the application
    ```

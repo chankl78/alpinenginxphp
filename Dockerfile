@@ -8,19 +8,20 @@ RUN apk update \
 	&& apk add libxml2-dev \
 	&& apk add libsodium \
 	&& docker-php-ext-install bcmath ctype fileinfo json mysqli pdo pdo_mysql tokenizer xml \
-	&& rm /var/cache/apk/*
+	&& rm /var/cache/apk/* \
+    && apk add nodejs-npm \
+    && apk add yarn
 
 RUN apk --update add wget \
   	curl \
   	git \
   	nano \
-	nodejs-npm \
-	yarn \
-  # grep \
+  # nodejs-npm \
+    grep \
   # build-base \
   # libmemcached-dev \
-   	libmcrypt-dev \
-  	libxml2-dev \
+  # libmcrypt-dev \
+  #	libxml2-dev \
   	libpng-dev \
   # libltdl \
   	zlib-dev \
