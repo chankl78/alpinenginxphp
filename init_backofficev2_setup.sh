@@ -11,6 +11,5 @@ composer require laravel/passport
 cp .env.example .env
 php artisan key:generate
 
-yarn global add @quasar/cli
-yarn global add @quasar/icongenie
-yarn global add @vue/cli
+npm install -g @quasar/cli
+npm install -g @quasar/icongenie

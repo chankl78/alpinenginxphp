@@ -152,15 +152,15 @@ COPY php.ini-production /usr/local/etc/php/php.ini-production
 
 COPY init_laravel.sh /var/init_laravel.sh
 COPY init_laravellumen.sh /var/init_laravellumen.sh
-COPY init_laravel_quasar.sh /var/init_laravel_quasar.sh
-COPY init_laravel_quasar_setup.sh /var/init_laravel_quasar_setup.sh
+COPY init_laravel_quasar.sh /var/init_backofficev2_setup.sh
+COPY init_laravel_quasar_setup.sh /var/init_laravel_quasar_setup_new_project.sh
 COPY init_laravel_quasar.sh /var/init_laravel_1stinstall_framework7.sh
 COPY init_laravel_cleartemplate.sh /var/init_laravel_cleartemplate.sh
 
 RUN chmod +x /var/init_laravel.sh
 RUN chmod +x /var/init_laravellumen.sh
-RUN chmod +x /var/init_laravel_quasar.sh
-RUN chmod +x /var/init_laravel_quasar_setup.sh
+RUN chmod +x /var/init_backofficev2_setup.sh
+RUN chmod +x /var/init_laravel_quasar_setup_new_project.sh
 RUN chmod +x /var/init_laravel_1stinstall_framework7.sh
 RUN chmod +x /var/init_laravel_cleartemplate.sh
 
