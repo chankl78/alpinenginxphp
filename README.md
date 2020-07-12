@@ -94,9 +94,9 @@ For older version of my old dockerfile, please read "README v1.md".  It is worki
 
 4. Install necessary tools into quasar folder
    ```
-   yarn global add @quasar/cli
-   yarn global add @quasar/icongenie
-   yarn global add @vue/cli
+   npm install -g @quasar/cli
+   npm install -g @quasar/icongenie
+   npm install -g vue
 
    quasar c
    quasar b
