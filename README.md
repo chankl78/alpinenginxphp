@@ -1,6 +1,6 @@
-# Creating a Laravel 7.* with Framework7 or Quasar Framework in Docker
+# Creating a Laravel 8.* with Framework7 or Quasar Framework in Docker
 
-This is to create a development enviornment in docker container for my macbook pro, hosting laravel 7.* with quasar 1.* or framework7 in alpine 3.10, nginx 1.17.9 and php 7.4.4
+This is to create a development enviornment in docker container for my macbook pro, hosting laravel 8.* with quasar 1.* or framework7 in alpine, nginx and php
 
 Most likely I will always continue to upgrade alpine, nginx & php version.
 
@@ -16,11 +16,11 @@ For older version of my old dockerfile, please read "README v1.md".  It is worki
 
 
 2. Below is the steps for installing the dockerfile.  Any detail, refer the above link
-   - You can change "alpine311nginx1190php747" to any name you want
-      - ```docker build --no-cache -t alpine311nginx1190php747:1.0.1 .```
+   - You can change "alpine312nginx1193php7412" to any name you want
+      - ```docker build --no-cache -t alpine312nginx1193php7412:1.0.0 .```
    - To push images and save in docker hub (For my own referennce - lazy to search web)
-      - ```docker tag alpine311nginx1190php747:1.0.1 username/alpine311nginx1190php747:1.0.1```
-      - ```docker push username/alpine311nginx1190php747:1.0.1```
+      - ```docker tag alpine312nginx1193php7412:1.0.0 username/alpine312nginx1193php7412:1.0.0```
+      - ```docker push username/alpine312nginx1193php7412:1.0.0```
    - To start the docker container automatically
       - ```docker update --restart=always [CONTAINER]```
 
