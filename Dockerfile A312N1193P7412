@@ -30,7 +30,7 @@ RUN apk --update add wget \
   # libgsasl-dev \
   supervisor
 
-ENV NGINX_VERSION 1.19.4
+ENV NGINX_VERSION 1.19.3
 ENV NJS_VERSION   0.4.4
 ENV PKG_RELEASE   1
 
@@ -133,7 +133,7 @@ RUN set -x \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 
-ENV COMPOSER_VERSION 2.0.7
+ENV COMPOSER_VERSION 2.0.4
 
 # Let's roll composer
 RUN	curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=${COMPOSER_VERSION} && \
