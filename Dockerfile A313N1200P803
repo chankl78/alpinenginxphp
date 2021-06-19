@@ -1,17 +1,36 @@
-FROM php:8.0.7-fpm-alpine3.13
+FROM php:8.0.3-fpm-alpine3.13
 
 LABEL MAINTAINER Chan Kuan Leang <chankl78@gmail.com>
 
+# install extensions needed for Laravel
 RUN apk update \
-	&& apk add libmcrypt-dev supervisor libpng libpng-dev libzip libzip-dev \
-	&& apk add libxml2-dev curl git nano grep zlib-dev wget\
+	&& apk add libmcrypt-dev \
+	&& apk add libxml2-dev \
 	&& apk add libsodium \
-	&& docker-php-ext-install bcmath ctype fileinfo mysqli pdo pdo_mysql tokenizer xml gd zip \
+	&& docker-php-ext-install bcmath ctype fileinfo mysqli pdo pdo_mysql tokenizer xml \
 	&& rm /var/cache/apk/* \
     && apk add nodejs-npm \
     && apk add yarn
 
-ENV NGINX_VERSION 1.20.1
+RUN apk --update add wget \
+  	curl \
+  	git \
+  	nano \
+  # nodejs-npm \
+    grep \
+  # build-base \
+  # libmemcached-dev \
+  # libmcrypt-dev \
+  #	libxml2-dev \
+  	libpng-dev \
+  # libltdl \
+  	zlib-dev \
+  # autoconf \
+  # cyrus-sasl-dev \
+  # libgsasl-dev \
+  supervisor
+
+ENV NGINX_VERSION 1.20.0
 ENV NJS_VERSION   0.5.3
 ENV PKG_RELEASE   1
 
@@ -114,7 +133,7 @@ RUN set -x \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 
-ENV COMPOSER_VERSION 2.1.3
+ENV COMPOSER_VERSION 2.0.12
 
 # Let's roll composer
 RUN	curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=${COMPOSER_VERSION} && \
