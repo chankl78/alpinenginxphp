@@ -16,11 +16,11 @@ For older version of my old dockerfile, please read "README v1.md".  It is worki
 
 
 2. Below is the steps for installing the dockerfile.  Any detail, refer the above link
-   - You can change "alpine314nginx1214php8012" to any name you want
-      - ```docker build --no-cache -t alpine314nginx1214php8012:1.0.0 .```
+   - You can change "alpine315nginx1215php812" to any name you want
+      - ```docker build --no-cache -t alpine315nginx1215php812:1.0.0 .```
    - To push images and save in docker hub (For my own referennce - lazy to search web)
-      - ```docker tag alpine314nginx1214php8012:1.0.0 username/alpine314nginx1214php8012:1.0.0```
-      - ```docker push username/alpine314nginx1214php8012:1.0.0```
+      - ```docker tag alpine315nginx1215php812:1.0.0 username/alpine315nginx1215php812:1.0.0```
+      - ```docker push username/alpine315nginx1215php812:1.0.0```
    - To start the docker container automatically
       - ```docker update --restart=always [CONTAINER]```
 
@@ -29,7 +29,7 @@ For older version of my old dockerfile, please read "README v1.md".  It is worki
 ## Installation (Manual) for Framework7
 1. Create a docker container (Refer to Prerequisites if you have not install dockerfile)
    ```
-   docker run -d --name backofficev2 -p 8880:80 -v /usr/local/var/www/htdocs/backofficev2:/var/www/html username/alpine314nginx1214php8012:1.0.0
+   docker run -d --name backofficev2 -p 8880:80 -v /usr/local/var/www/htdocs/backofficev2:/var/www/html username/alpine315nginx1215php812:1.0.0
    ```
 
 2. Install Laravel to the latest version
