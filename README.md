@@ -17,10 +17,10 @@ For older version of my old dockerfile, please read "README v1.md".  It is worki
 
 2. Below is the steps for installing the dockerfile.  Any detail, refer the above link
    - You can change "alpine315nginx1215php812" to any name you want
-      - ```docker build --no-cache -t alpine315nginx1215php812:1.0.0 .```
+      - ```docker build --no-cache -t alpine315nginx1216php813:1.0.0 .```
    - To push images and save in docker hub (For my own referennce - lazy to search web)
-      - ```docker tag alpine315nginx1215php812:1.0.0 username/alpine315nginx1215php812:1.0.0```
-      - ```docker push username/alpine315nginx1215php812:1.0.0```
+      - ```docker tag alpine315nginx1216php813:1.0.0 username/alpine315nginx1216php813:1.0.0```
+      - ```docker push username/alpine315nginx1216php813:1.0.0```
    - To start the docker container automatically
       - ```docker update --restart=always [CONTAINER]```
 
@@ -29,7 +29,7 @@ For older version of my old dockerfile, please read "README v1.md".  It is worki
 ## Installation (Manual) for Framework7
 1. Create a docker container (Refer to Prerequisites if you have not install dockerfile)
    ```
-   docker run -d --name backofficev2 -p 8880:80 -v /usr/local/var/www/htdocs/backofficev2:/var/www/html username/alpine315nginx1215php812:1.0.0
+   docker run -d --name backofficev2 -p 8880:80 -v /usr/local/var/www/htdocs/backofficev2:/var/www/html username/alpine315nginx1216php813:1.0.0
    ```
 
 2. Install Laravel to the latest version
@@ -58,7 +58,7 @@ For older version of my old dockerfile, please read "README v1.md".  It is worki
 ## Installation (Auto) for Framework7
 1. Create a docker container (Refer to Prerequisites if you have not install dockerfile)
    ```
-   docker run -d --name backofficev2 -p 8880:80 -v /usr/local/var/www/htdocs/backofficev2:/var/www/html alpine310nginx1172php738:1.0.1
+   docker run -d --name backofficev2 -p 8880:80 -v /usr/local/var/www/htdocs/backofficev2:/var/www/html alpine315nginx1216php813:1.0.1
    ```
 
 2. Run docker exec to install the necessary tools
@@ -80,7 +80,7 @@ For older version of my old dockerfile, please read "README v1.md".  It is worki
 
 2. Create a docker container (Refer to Prerequisites if you have not install dockerfile)
    ```
-   docker run -d --name backoffice -p 8880:80 -v /usr/local/var/www/htdocs/backoffice:/var/www/html alpine311nginx1190php747:1.0.1
+   docker run -d --name backoffice -p 8880:80 -v /usr/local/var/www/htdocs/backoffice:/var/www/html alpine315nginx1216php813:1.0.1
    ```
 
 
