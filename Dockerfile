@@ -1,18 +1,30 @@
-FROM php:8.2.3-fpm-alpine3.17
+FROM php:8.3.3-fpm-alpine3.18
 
 LABEL MAINTAINER Chan Kuan Leang <chankl78@gmail.com>
 
 RUN apk update \
 	&& apk add libmcrypt-dev supervisor libpng libpng-dev libzip libzip-dev \
-	&& apk add libxml2-dev curl git nano grep zlib-dev wget\
+	&& apk add libxml2-dev curl git nano grep zlib-dev wget autoconf\
 	&& apk add libsodium \
-    && apk add --no-cache imagemagick-dev imagemagick \
+    && apk --update add gcc make g++ zlib-dev \
 	&& docker-php-ext-install bcmath ctype fileinfo mysqli pdo pdo_mysql xml gd zip \
 	&& rm /var/cache/apk/* \
     && apk add --update npm \
     && apk add yarn
 
-ENV NGINX_VERSION 1.23.3
+RUN apk --update add imagemagick imagemagick-dev
+RUN curl -L -o /tmp/imagick.tar.gz https://github.com/Imagick/imagick/archive/7088edc353f53c4bc644573a79cdcd67a726ae16.tar.gz \
+    && tar --strip-components=1 -xf /tmp/imagick.tar.gz \
+    && phpize \
+    && ./configure \
+    && make \
+    && make install \
+    && echo "extension=imagick.so" > /usr/local/etc/php/conf.d/ext-imagick.ini \
+    && rm -rf /tmp/*
+# RUN pecl install -o -f imagick &&  
+RUN docker-php-ext-enable imagick
+
+ENV NGINX_VERSION 1.25.4
 ENV PKG_RELEASE   1
 
 RUN set -x \
@@ -62,7 +74,7 @@ RUN set -x \
                 export HOME=${tempDir} \
                 && cd ${tempDir} \
                 && curl -f -O https://hg.nginx.org/pkg-oss/archive/${NGINX_VERSION}-${PKG_RELEASE}.tar.gz \
-                && PKGOSSCHECKSUM=\"52a80f6c3b3914462f8a0b2fbadea950bcd79c1bd528386aff4c28d5a80c6920d783575a061a47b60fea800eef66bf5a0178a137ea51c37277fe9c2779715990 *${NGINX_VERSION}-${PKG_RELEASE}.tar.gz\" \
+                && PKGOSSCHECKSUM=\"79bf214256bf55700c776a87abfc3cf542323a267d879e89110aa44b551d12f6df7d56676a68f255ebbb54275185980d1fa37075f000d98e0ecac28db9e89fe3 *${NGINX_VERSION}-${PKG_RELEASE}.tar.gz\" \
                 && if [ \"\$(openssl sha512 -r ${NGINX_VERSION}-${PKG_RELEASE}.tar.gz)\" = \"\$PKGOSSCHECKSUM\" ]; then \
                     echo \"pkg-oss tarball checksum verification succeeded!\"; \
                 else \
@@ -77,16 +89,16 @@ RUN set -x \
                 && abuild-sign -k ${tempDir}/.abuild/abuild-key.rsa ${tempDir}/packages/alpine/${apkArch}/APKINDEX.tar.gz \
                 " \
             && cp ${tempDir}/.abuild/abuild-key.rsa.pub /etc/apk/keys/ \
-            && apk del .build-deps \
+            && apk del --no-network .build-deps \
             && apk add -X ${tempDir}/packages/alpine/ --no-cache $nginxPackages \
             ;; \
     esac \
 # remove checksum deps
-    && apk del .checksum-deps \
+    && apk del --no-network .checksum-deps \
 # if we have leftovers from building, let's purge them (including extra, unnecessary build deps)
     && if [ -n "$tempDir" ]; then rm -rf "$tempDir"; fi \
-    && if [ -n "/etc/apk/keys/abuild-key.rsa.pub" ]; then rm -f /etc/apk/keys/abuild-key.rsa.pub; fi \
-    && if [ -n "/etc/apk/keys/nginx_signing.rsa.pub" ]; then rm -f /etc/apk/keys/nginx_signing.rsa.pub; fi \
+    && if [ -f "/etc/apk/keys/abuild-key.rsa.pub" ]; then rm -f /etc/apk/keys/abuild-key.rsa.pub; fi \
+    && if [ -f "/etc/apk/keys/nginx_signing.rsa.pub" ]; then rm -f /etc/apk/keys/nginx_signing.rsa.pub; fi \
 # Bring in gettext so we can get `envsubst`, then throw
 # the rest away. To do this, we need to install `gettext`
 # then move `envsubst` out of the way so `gettext` can
@@ -102,7 +114,7 @@ RUN set -x \
             | sort -u \
     )" \
     && apk add --no-cache $runDeps \
-    && apk del .gettext \
+    && apk del --no-network .gettext \
     && mv /tmp/envsubst /usr/local/bin/ \
 # Bring in tzdata so users could set the timezones through the environment
 # variables
@@ -111,7 +123,7 @@ RUN set -x \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 
-ENV COMPOSER_VERSION 2.5.4
+ENV COMPOSER_VERSION 2.7.1
 
 # Let's roll composer
 RUN	curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=${COMPOSER_VERSION} && \
