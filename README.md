@@ -1,6 +1,6 @@
-# Creating a Laravel 8.* with Framework7 or Quasar Framework in Docker
+# Creating a Laravel with Framework7 or Quasar Framework in Docker
 
-This is to create a development enviornment in docker container for my macbook pro, hosting laravel 8.* with quasar 1.* or framework7 in alpine, nginx and php
+This is to create a development enviornment in docker container for my macbook pro, hosting laravel with quasar framework or framework7 in alpine, nginx and php
 
 Most likely I will always continue to upgrade alpine, nginx & php version.
 
@@ -10,17 +10,35 @@ For older version of my old dockerfile, please read "README v1.md".  It is worki
 
 
 ## Prerequisites
+### Upgrading to the latest versions
+Only 3 lines at the top of the Dockerfile need to change:
+
+```dockerfile
+ARG PHP_VERSION=8.5.12      # https://hub.docker.com/_/php (tags like 8.5.12-fpm-alpine3.24)
+ARG ALPINE_VERSION=3.24     # the alpine part of the same php tag
+ARG COMPOSER_VERSION=2.11.1 # https://hub.docker.com/_/composer
+```
+
+- nginx comes from Alpine's own package (`apk add nginx`), so it upgrades automatically with the Alpine version. No more copying nginx's Dockerfile.
+- PHP extensions are listed on one line (`install-php-extensions ...`). To add one (e.g. `redis`), just add the name.
+- Instead of editing the file, you can also pass the versions when building:
+  ```
+  docker build --build-arg PHP_VERSION=8.5.13 --build-arg ALPINE_VERSION=3.24 -t alpine324php8513:1.0.0 .
+  ```
+- Old Dockerfiles are kept in git history. Tag each upgrade, e.g. `git tag A324P8512`, and use `git show A324P8512:Dockerfile` to see an old one.
+
+
 ### Installation of the Docker Container into development computer
 1. Refer to the below link to do the installation of dockerfile
    - https://github.com/chankl78/alpinenginxphp.git
 
 
 2. Below is the steps for installing the dockerfile.  Any detail, refer the above link
-   - You can change "alpine318nginx1254php833" to any name you want
-      - ```docker build --no-cache -t alpine318nginx1254php833:1.0.0 .```
+   - You can change "alpine324php8512" to any name you want
+      - ```docker build --pull -t alpine324php8512:1.0.0 .```
    - To push images and save in docker hub (For my own referennce - lazy to search web)
-      - ```docker tag alpine318nginx1254php833:1.0.0 username/alpine318nginx1254php833:1.0.0```
-      - ```docker push username/alpine318nginx1254php833:1.0.0```
+      - ```docker tag alpine324php8512:1.0.0 username/alpine324php8512:1.0.0```
+      - ```docker push username/alpine324php8512:1.0.0```
    - To start the docker container automatically
       - ```docker update --restart=always [CONTAINER]```
 
@@ -29,7 +47,7 @@ For older version of my old dockerfile, please read "README v1.md".  It is worki
 ## Installation (Manual) for Framework7
 1. Create a docker container (Refer to Prerequisites if you have not install dockerfile)
    ```
-   docker run -d --name backofficev2 -p 8880:80 -v /usr/local/var/www/htdocs/backofficev2:/var/www/html username/alpine318nginx1254php833:1.0.0
+   docker run -d --name backofficev2 -p 8880:80 -v /usr/local/var/www/htdocs/backofficev2:/var/www/html username/alpine324php8512:1.0.0
    ```
 
 2. Install Laravel to the latest version
@@ -58,7 +76,7 @@ For older version of my old dockerfile, please read "README v1.md".  It is worki
 ## Installation (Auto) for Framework7
 1. Create a docker container (Refer to Prerequisites if you have not install dockerfile)
    ```
-   docker run -d --name backofficev2 -p 8880:80 -v /usr/local/var/www/htdocs/backofficev2:/var/www/html alpine318nginx1254php833:1.0.0
+   docker run -d --name backofficev2 -p 8880:80 -v /usr/local/var/www/htdocs/backofficev2:/var/www/html alpine324php8512:1.0.0
    ```
 
 2. Run docker exec to install the necessary tools
@@ -80,7 +98,7 @@ For older version of my old dockerfile, please read "README v1.md".  It is worki
 
 2. Create a docker container (Refer to Prerequisites if you have not install dockerfile)
    ```
-   docker run -d --name backoffice -p 8880:80 -v /usr/local/var/www/htdocs/backoffice:/var/www/html alpine318nginx1254php833:1.0.0
+   docker run -d --name backoffice -p 8880:80 -v /usr/local/var/www/htdocs/backoffice:/var/www/html alpine324php8512:1.0.0
    ```
 
 
